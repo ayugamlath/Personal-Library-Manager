@@ -16,8 +16,9 @@ exports.saveBook = async (req, res) => {
   const { googleBookId, title, authors, thumbnail, description } = req.body;
   try {
     let book = await Book.findOne({ user: req.user.userId, googleBookId });
-    if (book)
+    if (book) {
       return res.status(400).json({ message: "Book already in library" });
+    }
 
     book = new Book({
       user: req.user.userId,
