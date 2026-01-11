@@ -25,6 +25,12 @@ mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("Connected to MongoDB");
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    // Only listen if not in a serverless environment (e.g. Vercel)
+    // require.main === module is true when run directly (node server.js)
+    if (require.main === module) {
+      app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    }
   })
   .catch((err) => console.error(err));
+
+module.exports = app;
