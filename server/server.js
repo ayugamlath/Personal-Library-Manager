@@ -21,16 +21,27 @@ app.get("/", (req, res) => {
 });
 
 // MongoDB Connection
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log("Connected to MongoDB");
-    // Only listen if not in a serverless environment (e.g. Vercel)
-    // require.main === module is true when run directly (node server.js)
-    if (require.main === module) {
-      app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const connectDB = async () => {
+  try {
+    if (mongoose.connection.readyState === 1) {
+      // Already connected
+      return;
     }
-  })
-  .catch((err) => console.error(err));
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("Connected to MongoDB");
+  } catch (err) {
+    console.error("MongoDB connection error:", err);
+    // Don't exit process in serverless, just log
+  }
+};
+
+// Connect to DB immediately
+connectDB();
+
+// Only listen if not in a serverless environment (e.g. Vercel)
+// require.main === module is true when run directly (node server.js)
+if (require.main === module) {
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
 
 module.exports = app;
