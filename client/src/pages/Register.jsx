@@ -21,8 +21,8 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[80vh]">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
+    <div className="flex justify-center items-center min-h-[80vh] ">
+      <div className="bg-white p-8 rounded shadow-md w-full max-w-md dark:bg-gray-800 dark:text-gray-100">
         <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
         {error && (
           <p className="text-red-500 text-sm mb-4 text-center">{error}</p>
