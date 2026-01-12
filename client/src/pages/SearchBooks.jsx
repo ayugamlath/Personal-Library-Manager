@@ -3,7 +3,7 @@ import { saveBook, allbooks } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Card from "../components/Card";
-import background from "../assets/background.jpg";
+import background from "../assets/background.png";
 
 const SearchBooks = () => {
   const [query, setQuery] = useState("");
