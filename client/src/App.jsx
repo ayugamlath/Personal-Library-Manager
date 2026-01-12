@@ -10,16 +10,18 @@ import SavedBooks from "./pages/SavedBooks";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return <div className="p-4 text-center">Loading...</div>;
+  if (loading)
+    return <div className="p-4 text-center dark:text-gray-200">Loading...</div>;
   return user ? children : <Navigate to="/login" />;
 };
 
 const AppContent = () => {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col font-sans text-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col font-sans text-gray-900 dark:text-gray-100 transition-colors duration-200">
       <Navbar />
       <div className="flex-1">
         <Routes>
@@ -43,9 +45,11 @@ const AppContent = () => {
 function App() {
   return (
     <Router>
-      <AuthProvider>
-        <AppContent />
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <AppContent />
+        </AuthProvider>
+      </ThemeProvider>
     </Router>
   );
 }
